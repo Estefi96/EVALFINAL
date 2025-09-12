@@ -1,0 +1,506 @@
+{
+	"info": {
+		"_postman_id": "d9697268-2aa7-4801-a8c7-37a47408fa60",
+		"name": "EVALUACION_FINAL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44735750"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Crear usuario",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Juan\",\n    \"lastname\": \"Pérez\",\n    \"rut\": \"12345678-0\",\n    \"email\": \"juanito@example.com\",\n    \"password\": \"123456\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://evalfinal.test/api/users",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista usuarios",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://evalfinal.test/api/users",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar usuario por ID",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://evalfinal.test/api/users/2",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar usuario por ID",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Juan Actualizado\",\n    \"lastname\": \"Pérez\",\n    \"rut\": \"12345678-9\",\n    \"email\": \"juan.perez@example.com\",\n    \"password\": \"nueva_contraseña\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://evalfinal.test/api/users/1",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener usuario por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZXZhbGZpbmFsLnRlc3QvYXBpL2xvZ2luIiwiaWF0IjoxNzU3NjM5MjgzLCJleHAiOjE3NTc2NDI4ODMsIm5iZiI6MTc1NzYzOTI4MywianRpIjoieG1yS2FJSFp3SXp1aEFSQSIsInN1YiI6IjQiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.kGtCBRUIvPYv2IKPCvkXqH1JCCY-CzjnRBrp1nje3eY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://evalfinal.test/api/users/4",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"users",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Login usuario",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@ventasfix.cl\",\n    \"password\": \"123\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://evalfinal.test/api/login",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "Crear producto ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZXZhbGZpbmFsLnRlc3QvYXBpL2xvZ2luIiwiaWF0IjoxNzU3NjQxNTcyLCJleHAiOjE3NTc2NDUxNzIsIm5iZiI6MTc1NzY0MTU3MiwianRpIjoiTmtqUjZiMjJCVWlCcjNWaiIsInN1YiI6IjQiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.O2rp6i6dTgHgyAxGxPQKVz1LLFWY4_ii4eHUFgP3zLg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sku\": \"SKU12345\",\n    \"nombre\": \"Producto de prueba\",\n    \"descripcion_corta\": \"Descripción corta\",\n    \"descripcion_larga\": \"Descripción larga del producto\",\n    \"imagen_url\": \"http://ejemplo.com/imagen.jpg\",\n    \"precio_neto\": 1000,\n    \"precio_venta\": 1200,\n    \"stock_actual\": 50,\n    \"stock_minimo\": 5,\n    \"stock_bajo\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://evalfinal.test/api/products",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar productos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZXZhbGZpbmFsLnRlc3QvYXBpL2xvZ2luIiwiaWF0IjoxNzU3NjQxNTcyLCJleHAiOjE3NTc2NDUxNzIsIm5iZiI6MTc1NzY0MTU3MiwianRpIjoiTmtqUjZiMjJCVWlCcjNWaiIsInN1YiI6IjQiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.O2rp6i6dTgHgyAxGxPQKVz1LLFWY4_ii4eHUFgP3zLg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://evalfinal.test/api/products",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener usuario por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZXZhbGZpbmFsLnRlc3QvYXBpL2xvZ2luIiwiaWF0IjoxNzU3NjQxNTcyLCJleHAiOjE3NTc2NDUxNzIsIm5iZiI6MTc1NzY0MTU3MiwianRpIjoiTmtqUjZiMjJCVWlCcjNWaiIsInN1YiI6IjQiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.O2rp6i6dTgHgyAxGxPQKVz1LLFWY4_ii4eHUFgP3zLg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://evalfinal.test/api/products/1",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar producto por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZXZhbGZpbmFsLnRlc3QvYXBpL2xvZ2luIiwiaWF0IjoxNzU3NjQxNTcyLCJleHAiOjE3NTc2NDUxNzIsIm5iZiI6MTc1NzY0MTU3MiwianRpIjoiTmtqUjZiMjJCVWlCcjNWaiIsInN1YiI6IjQiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.O2rp6i6dTgHgyAxGxPQKVz1LLFWY4_ii4eHUFgP3zLg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sku\": \"SKU12345\",\n    \"nombre\": \"Producto actualizado\",\n    \"descripcion_corta\": \"Nueva descripción corta\",\n    \"descripcion_larga\": \"Nueva descripción larga\",\n    \"imagen_url\": \"http://ejemplo.com/nueva-imagen.jpg\",\n    \"precio_neto\": 1500,\n    \"precio_venta\": 1700,\n    \"stock_actual\": 40,\n    \"stock_minimo\": 10,\n    \"stock_bajo\": false\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://evalfinal.test/api/products/1",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar producto por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZXZhbGZpbmFsLnRlc3QvYXBpL2xvZ2luIiwiaWF0IjoxNzU3NjQxNTcyLCJleHAiOjE3NTc2NDUxNzIsIm5iZiI6MTc1NzY0MTU3MiwianRpIjoiTmtqUjZiMjJCVWlCcjNWaiIsInN1YiI6IjQiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.O2rp6i6dTgHgyAxGxPQKVz1LLFWY4_ii4eHUFgP3zLg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://evalfinal.test/api/products/1",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "clients",
+			"item": [
+				{
+					"name": "Listar clients",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZXZhbGZpbmFsLnRlc3QvYXBpL2xvZ2luIiwiaWF0IjoxNzU3NjQxNTcyLCJleHAiOjE3NTc2NDUxNzIsIm5iZiI6MTc1NzY0MTU3MiwianRpIjoiTmtqUjZiMjJCVWlCcjNWaiIsInN1YiI6IjQiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.O2rp6i6dTgHgyAxGxPQKVz1LLFWY4_ii4eHUFgP3zLg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://evalfinal.test/api/clients",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear cliente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZXZhbGZpbmFsLnRlc3QvYXBpL2xvZ2luIiwiaWF0IjoxNzU3NjQxNTcyLCJleHAiOjE3NTc2NDUxNzIsIm5iZiI6MTc1NzY0MTU3MiwianRpIjoiTmtqUjZiMjJCVWlCcjNWaiIsInN1YiI6IjQiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.O2rp6i6dTgHgyAxGxPQKVz1LLFWY4_ii4eHUFgP3zLg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Cliente de prueba\",\n    \"telefono\": \"912345678\",\n    \"direccion\": \"Calle Falsa 123\",\n    \"email_contacto\": \"sdfsdfsdfsf@addddd.com\",\n    \"razon_social\": \"sdf\",\n    \"rut_empresa\": \"sdf\",\n    \"rubro\": \"sdf\",\n    \"contacto\": \"sdf\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://evalfinal.test/api/clients",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener usuario por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZXZhbGZpbmFsLnRlc3QvYXBpL2xvZ2luIiwiaWF0IjoxNzU3NjQxNTcyLCJleHAiOjE3NTc2NDUxNzIsIm5iZiI6MTc1NzY0MTU3MiwianRpIjoiTmtqUjZiMjJCVWlCcjNWaiIsInN1YiI6IjQiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.O2rp6i6dTgHgyAxGxPQKVz1LLFWY4_ii4eHUFgP3zLg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://evalfinal.test/api/clients/1",
+							"protocol": "http",
+							"host": [
+								"evalfinal",
+								"test"
+							],
+							"path": [
+								"api",
+								"clients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
