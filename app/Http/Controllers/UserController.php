@@ -14,7 +14,6 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
             'rut' => 'required|string|unique:users',
             'lastname' => 'required|string|max:255',
@@ -26,9 +25,22 @@ class UserController extends Controller
             ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+        $nombre = trim(mb_strtolower($request->name));
+        $apellido = trim(mb_strtolower($request->lastname));
+
+        $nombre = strtr($nombre, [
+            'á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','ñ'=>'n',
+            'Á'=>'a','É'=>'e','Í'=>'i','Ó'=>'o','Ú'=>'u','Ñ'=>'n'
+        ]);
+        $apellido = strtr($apellido, [
+            'á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','ñ'=>'n',
+            'Á'=>'a','É'=>'e','Í'=>'i','Ó'=>'o','Ú'=>'u','Ñ'=>'n'
+        ]);
+        $email = $nombre . '.' . $apellido . '@ventasfix.cl';
+
         $user = User::create([
             'name'     => $request->name,
-            'email'    => $request->email,
+            'email'    => $email,
             'password' => Hash::make($request->password),
             'rut' => $request->rut,
             'lastname' => $request->lastname,
