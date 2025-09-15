@@ -15,7 +15,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name'     => 'required|string|max:255',
             'password' => 'required|string|min:6',
-            'rut' => 'required|string|unique:users',
+            'rut'      => 'required|string|unique:users',
             'lastname' => 'required|string|max:255',
         ]);
 
@@ -28,21 +28,16 @@ class UserController extends Controller
         $nombre = trim(mb_strtolower($request->name));
         $apellido = trim(mb_strtolower($request->lastname));
 
-        $nombre = strtr($nombre, [
-            'á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','ñ'=>'n',
-            'Á'=>'a','É'=>'e','Í'=>'i','Ó'=>'o','Ú'=>'u','Ñ'=>'n'
-        ]);
-        $apellido = strtr($apellido, [
-            'á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','ñ'=>'n',
-            'Á'=>'a','É'=>'e','Í'=>'i','Ó'=>'o','Ú'=>'u','Ñ'=>'n'
-        ]);
+        $nombre = strtr($nombre, ['á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','ñ'=>'n','Á'=>'a','É'=>'e','Í'=>'i','Ó'=>'o','Ú'=>'u','Ñ'=>'n']);
+        $apellido = strtr($apellido, ['á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','ñ'=>'n','Á'=>'a','É'=>'e','Í'=>'i','Ó'=>'o','Ú'=>'u','Ñ'=>'n']);
+
         $email = $nombre . '.' . $apellido . '@ventasfix.cl';
 
         $user = User::create([
             'name'     => $request->name,
             'email'    => $email,
             'password' => Hash::make($request->password),
-            'rut' => $request->rut,
+            'rut'      => $request->rut,
             'lastname' => $request->lastname,
         ]);
 
@@ -54,79 +49,66 @@ class UserController extends Controller
 
     public function list()
     {
-        $users = User::all();
-        return response()->json($users);
+        return response()->json(User::paginate(10));
     }
 
     public function get($id)
     {
         $user = User::find($id);
-
         if (!$user) {
-            return response()->json([
-                'message' => 'Usuario no encontrado'
-            ], JsonResponse::HTTP_NOT_FOUND);
+            return response()->json(['message' => 'Usuario no encontrado'], JsonResponse::HTTP_NOT_FOUND);
         }
-
         return response()->json($user);
     }
 
     public function delete($id)
     {
         $user = User::find($id);
-
         if (!$user) {
-            return response()->json([
-                'message' => 'Usuario no encontrado',
-                'status' => 'not_found'
-            ], JsonResponse::HTTP_NOT_FOUND);
+            return response()->json(['message' => 'Usuario no encontrado'], JsonResponse::HTTP_NOT_FOUND);
         }
-
         $user->delete();
-
-        return response()->json([
-            'message' => 'Usuario eliminado exitosamente'
-        ], JsonResponse::HTTP_OK);
+        return response()->json(['message' => 'Usuario eliminado exitosamente'], JsonResponse::HTTP_OK);
     }
 
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-
         if (!$user) {
-            return response()->json([
-                'message' => 'Usuario no encontrado'
-            ], JsonResponse::HTTP_NOT_FOUND);
+            return response()->json(['message' => 'Usuario no encontrado'], JsonResponse::HTTP_NOT_FOUND);
         }
 
         $validator = Validator::make($request->all(), [
             'name'     => 'sometimes|required|string|max:255',
-            'email'    => 'sometimes|required|string|email|max:255|unique:users,email,' . $id,
             'password' => 'sometimes|required|string|min:6',
             'rut'      => 'sometimes|required|string|unique:users,rut,' . $id,
             'lastname' => 'sometimes|required|string|max:255',
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+            return response()->json(['errors' => $validator->errors()], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         if ($request->has('name')) {
             $user->name = $request->name;
         }
-        if ($request->has('email')) {
-            $user->email = $request->email;
-        }
-        if ($request->has('password')) {
-            $user->password = Hash::make($request->password);
+        if ($request->has('lastname')) {
+            $user->lastname = $request->lastname;
         }
         if ($request->has('rut')) {
             $user->rut = $request->rut;
         }
-        if ($request->has('lastname')) {
-            $user->lastname = $request->lastname;
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        // Regenerar email institucional si se modificó nombre o apellido
+        if ($request->has('name') || $request->has('lastname')) {
+            $nombre = trim(mb_strtolower($user->name));
+            $apellido = trim(mb_strtolower($user->lastname));
+            $nombre = strtr($nombre, ['á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','ñ'=>'n','Á'=>'a','É'=>'e','Í'=>'i','Ó'=>'o','Ú'=>'u','Ñ'=>'n']);
+            $apellido = strtr($apellido, ['á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','ñ'=>'n','Á'=>'a','É'=>'e','Í'=>'i','Ó'=>'o','Ú'=>'u','Ñ'=>'n']);
+            $user->email = $nombre . '.' . $apellido . '@ventasfix.cl';
         }
 
         $user->save();

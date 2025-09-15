@@ -11,15 +11,14 @@ class ClientController extends Controller
 {
     public function list()
     {
-        $clients = Cliente::all();
-        return response()->json($clients);
+        return response()->json(Cliente::paginate(10));
     }
 
     public function get($id)
     {
         $client = Cliente::find($id);
         if (!$client) {
-            return response()->json(['message' => 'Cliente no encontrado'], 404);
+            return response()->json(['message' => 'Cliente no encontrado'], JsonResponse::HTTP_NOT_FOUND);
         }
         return response()->json($client);
     }
@@ -28,33 +27,35 @@ class ClientController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string',
-            'email_contacto' => 'sometimes|required|email|unique:clientes,email_contacto',
+            'email_contacto' => 'required|email|unique:clientes,email_contacto',
             'razon_social' => 'required|string',
-            'rut_empresa' => 'sometimes|required|string|unique:clientes,rut_empresa',
+            'rut_empresa' => 'required|string|unique:clientes,rut_empresa',
             'rubro' => 'required|string',
             'telefono' => 'required|string',
             'direccion' => 'required|string',
-            'contacto' => 'required|string',
+            'nombre_contacto' => 'required|string',
         ]);
 
-         if ($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors()
-            ], jsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
+
+        $client = Cliente::create([
+            'nombre' => $request->nombre,
+            'email_contacto' => $request->email_contacto,
+            'razon_social' => $request->razon_social,
+            'rut_empresa' => $request->rut_empresa,
+            'rubro' => $request->rubro,
+            'telefono' => $request->telefono,
+            'direccion' => $request->direccion,
+            'nombre_contacto' => $request->nombre_contacto,
+        ]);
 
         return response()->json([
             'message' => 'Cliente creado exitosamente',
-            'client'    => Cliente::create([
-                'nombre' => $request->nombre,
-                'email_contacto' => $request->email_contacto,
-                'razon_social' => $request->razon_social,
-                'rut_empresa' => $request->rut_empresa,
-                'rubro' => $request->rubro,
-                'telefono' => $request->telefono,
-                'direccion' => $request->direccion,
-                'contacto' => $request->contacto,
-            ])
+            'client' => $client
         ], JsonResponse::HTTP_CREATED);
     }
 
@@ -62,10 +63,10 @@ class ClientController extends Controller
     {
         $client = Cliente::find($id);
         if (!$client) {
-            return response()->json(['message' => 'Cliente no encontrado'], 404);
+            return response()->json(['message' => 'Cliente no encontrado'], JsonResponse::HTTP_NOT_FOUND);
         }
 
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'nombre' => 'sometimes|required|string',
             'email_contacto' => 'sometimes|required|email|unique:clientes,email_contacto,' . $id,
             'razon_social' => 'sometimes|required|string',
@@ -73,23 +74,39 @@ class ClientController extends Controller
             'rubro' => 'sometimes|required|string',
             'telefono' => 'sometimes|required|string',
             'direccion' => 'sometimes|required|string',
-            'contacto' => 'sometimes|required|string',
+            'nombre_contacto' => 'sometimes|required|string',
         ]);
 
-        $client->update($validated);
-        return response()->json($client);
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $client->update($request->only([
+            'nombre',
+            'email_contacto',
+            'razon_social',
+            'rut_empresa',
+            'rubro',
+            'telefono',
+            'direccion',
+            'nombre_contacto'
+        ]));
+
+        return response()->json([
+            'message' => 'Cliente actualizado exitosamente',
+            'client' => $client
+        ]);
     }
 
     public function delete($id)
     {
         $client = Cliente::find($id);
         if (!$client) {
-            return response()->json(['message' => 'Cliente no encontrado'], 404);
+            return response()->json(['message' => 'Cliente no encontrado'], JsonResponse::HTTP_NOT_FOUND);
         }
         $client->delete();
-        return response()->json(['message' => 'Cliente eliminado']);
+        return response()->json(['message' => 'Cliente eliminado exitosamente']);
     }
 }
-
-
-

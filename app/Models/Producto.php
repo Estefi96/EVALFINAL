@@ -21,7 +21,7 @@ class Producto extends Model
         'precio_venta',
         'stock_actual',
         'stock_minimo',
-        'stock_bajo'
+        'stock_bajo',
+        'stock_alto'
     ];
-
 }

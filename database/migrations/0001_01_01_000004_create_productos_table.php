@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('stock_actual');
             $table->integer('stock_minimo');
             $table->boolean('stock_bajo')->default(false);
+            $table->integer('stock_alto');
             $table->timestamps();
         });
     }
