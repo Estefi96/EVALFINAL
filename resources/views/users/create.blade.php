@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container mt-5">
     <h2 class="mb-4">Agregar Usuario</h2>
@@ -28,7 +27,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="rut" class="form-label">RUT</label>
+            <label for="rut" class="form-label">RUT (sin puntos con guion)</label>
             <input type="text" name="rut" class="form-control" value="{{ old('rut') }}" required>
         </div>
 
